@@ -17,13 +17,13 @@ Implemented in Rust, DesertDown is built around two deterministic finite state a
 
 Usage to write an AST to *standard output*:
 
-```sh
+```
 cargo run --release -- <input-file>
 ```
 
 Of course, one can redirect this to a file:
 
-```sh
+```
 cargo run --release -- <input-file> > <output-file>
 ```
 
@@ -33,7 +33,7 @@ cargo run --release -- <input-file> > <output-file>
 
 Usage to write HTML to *standard output*:
 
-```sh
+```
 cargo run --release -- <input-file> --html [--theme light|dark] [--width fixed|full] [--allow-links] [--fragment]
 ```
 
@@ -51,7 +51,7 @@ Where:
 
 Of course, one can redirect this to a file:
 
-```sh
+```
 cargo run --release -- <input-file> --html [--theme light|dark] [--width fixed|full] [--allow-links] [--fragment] > <output-file>
 ```
 
@@ -59,19 +59,19 @@ cargo run --release -- <input-file> --html [--theme light|dark] [--width fixed|f
 
 To run both "input to AST" and "input to AST to HTML" benchmarks:
 
-```sh
+```
 cargo bench
 ```
 
 To run *only* the "input to AST" benchmark:
 
-```sh
+```
 cargo bench --bench time_to_ast
 ```
 
 To run *only* the "input to AST to HTML" benchmark:
 
-```sh
+```
 cargo bench --bench time_to_html
 ```
 
@@ -79,7 +79,7 @@ cargo bench --bench time_to_html
 
 Profile, and generate a flamegraph for a benchmark using:
 
-```sh
+```
 cargo flamegraph --bench <bench> -o flamegraph.svg -- --bench --profile-time 30 <bench-case>
 ```
 
