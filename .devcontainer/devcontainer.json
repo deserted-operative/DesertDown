@@ -1,0 +1,33 @@
+{
+    "name": "DesertDown Dev Container",
+
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".."
+    },
+
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "rust-lang.rust-analyzer",
+                "vadimcn.vscode-lldb"
+            ],
+
+            "settings": {
+                "editor.formatOnSave": true,
+                "rust-analyzer.check.command": "clippy"
+            }
+        }
+    },
+
+    // Required for comfortable LLDB debugging inside the container.
+    "runArgs": [
+        "--cap-add=PERFMON",
+        "--cap-add=SYS_PTRACE",
+        "--security-opt=seccomp=unconfined"
+    ],
+
+    "remoteUser": "vscode",
+
+    "postCreateCommand": "rustup component add rustfmt clippy && sudo mkdir -p /usr/local/cargo/registry /usr/local/cargo/git && sudo chown -R vscode:vscode /usr/local/cargo/registry /usr/local/cargo/git"
+}

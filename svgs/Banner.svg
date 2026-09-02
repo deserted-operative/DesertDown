@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="3840mm"
+   height="2160mm"
+   viewBox="0 0 3840 2160"
+   version="1.1"
+   id="svg1"
+   xml:space="preserve"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs1" /><g
+     id="layer1"><rect
+       style="fill:#ffffff;fill-opacity:1;stroke-width:3.6;stroke-linecap:round;stroke-linejoin:round"
+       id="rect1"
+       width="3840"
+       height="2160"
+       x="0"
+       y="-7.677552e-14" /><g
+       style="fill:none;stroke-width:0.0620888"
+       id="g1"
+       transform="matrix(4.2613636,0,0,4.2613636,470,807.273)"><g
+         fill="#000000"
+         id="g3"
+         style="stroke-width:0.0620888"><path
+           fill-rule="evenodd"
+           clip-rule="evenodd"
+           d="m 15,10 c -2.7614,0 -5,2.2386 -5,5 v 98 c 0,2.7614 2.2386,5 5,5 h 146 c 2.7614,0 5,-2.2386 5,-5 V 15 c 0,-2.7614 -2.2386,-5 -5,-5 z M 15,0 C 6.7157,0 0,6.7157 0,15 v 98 c 0,8.2843 6.7157,15 15,15 h 146 c 8.2843,0 15,-6.7157 15,-15 V 15 C 176,6.7157 169.2843,0 161,0 Z"
+           id="path1"
+           style="stroke-width:0.0620888" /><path
+           fill-rule="evenodd"
+           clip-rule="evenodd"
+           d="M 54.107,98 H 30 V 30 h 24.306 c 6.841,0 12.729,1.361 17.666,4.084 4.936,2.701 8.733,6.586 11.389,11.655 2.679,5.07 4.018,11.135 4.018,18.197 0,7.084 -1.339,13.171 -4.018,18.263 C 80.705,87.29 76.886,91.198 71.905,93.92 66.947,96.643 61.014,98 54.107,98 Z M 44.375,85.685 h 9.134 c 4.251,0 7.826,-0.752 10.726,-2.257 2.922,-1.528 5.113,-3.886 6.574,-7.073 1.484,-3.21 2.225,-7.35 2.225,-12.419 0,-5.025 -0.741,-9.132 -2.225,-12.319 -1.461,-3.188 -3.641,-5.535 -6.541,-7.04 -2.9,-1.505 -6.475,-2.258 -10.725,-2.258 h -9.168 z"
+           id="path2"
+           style="stroke-width:0.0620888" /><path
+           d="M 146,71.75 H 130.6875 V 30 h -14.375 V 71.75 H 101 L 123.5,98 Z"
+           id="path3"
+           style="stroke-width:0.0620888" /></g></g><text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:352.592px;font-family:Inter;-inkscape-font-specification:Inter;writing-mode:lr-tb;direction:ltr;fill:#000000;fill-opacity:1;stroke-width:3.60001;stroke-linecap:round;stroke-linejoin:round"
+       x="1350.8898"
+       y="1206.0244"
+       id="text1"><tspan
+         id="tspan1"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:352.592px;font-family:Inter;-inkscape-font-specification:'Inter Bold';fill:#000000;fill-opacity:1;stroke-width:3.60001"
+         x="1350.8898"
+         y="1206.0244">DesertDown</tspan></text></g></svg>

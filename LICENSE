@@ -1,0 +1,60 @@
+The DesertDown reference implementation source code written in Rust (i.e. the Rust code in this repository), is:
+
+Copyright (c) 2026, H.F.J.N.
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+
+  - Redistributions in binary form must reproduce the above
+    copyright notice, this list of conditions and the following
+    disclaimer in the documentation and/or other materials provided
+    with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+-----
+
+The DesertDown specification, Copyright (C) 2026 H.F.J.N., is released under the Creative Commons CC-BY-SA 4.0
+
+License: http://creativecommons.org/licenses/by-sa/4.0/
+
+The DesertDown specification is available at https://hfjn.co.uk/desert-down
+
+-----
+
+The DesertDown specification, is a derivative work of the CommonMark specification, version 0.31.2, Copyright (C) 2014-24 John MacFarlane, released under the Creative Commons CC-BY-SA 4.0
+
+License: http://creativecommons.org/licenses/by-sa/4.0/
+
+The CommonMark specification, version 0.31.2, is available at https://spec.commonmark.org/0.31.2
+
+-----
+
+The DesertDown icon, Copyright (C) 2026 H.F.J.N., is released under the Creative Commons CC-BY-SA 4.0
+
+License: http://creativecommons.org/licenses/by-sa/4.0/
+
+The DesertDown icon is a derivative of the Markdown Mark, created by Dustin Curtis and Mac Tyler, which is released under the Creative Commons CC0 1.0 (License: https://creativecommons.org/publicdomain/zero/1.0)
+
+The DesertDown icon also uses the Inter font, designed by Rasmus Andersson, available at https://github.com/rsms/inter
+
+The Inter font is licensed under the SIL Open Font License, Version 1.1. The license is available with an FAQ at: http://scripts.sil.org/OFL
+
+-----
+
+Markdown created by John Gruber (at https://daringfireball.net/projects/markdown/) and Aaron Swartz.

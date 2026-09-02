@@ -1,0 +1,32 @@
+[package]
+name = "desert_down"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+
+[dev-dependencies]
+criterion = { version = "0.8.2", features = ["html_reports"] }
+
+[[bench]]
+name = "time_to_ast"
+harness = false
+
+[[bench]]
+name = "time_to_html"
+harness = false
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+
+[profile.bench]
+debug = true
+
+[profile.profiling]
+inherits = "release"
+debug = "full"
+strip = "none"
+split-debuginfo = "off"
