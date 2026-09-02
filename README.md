@@ -2,10 +2,10 @@
 
 ## About
 
+DesertDown is a fast, free, flavourful markdown parser.
+
 > [!TIP]
 > For more information about the language specification, and an **interactive demo**, visit https://hfjn.co.uk/desert-down
-
-DesertDown is a fast, free, flavourful markdown parser.
 
 Implemented in Rust, DesertDown is built around two deterministic finite state automata. Compared to pre-existing markdown parsers, DesertDown aims to improve the permissiveness of markdown, allowing users more control over whitespace in the output, supporting text formatting like underlining and highlighting, recognising math content, and relaxing list structure. These, among other divergences, form the "flavour" that motivates the project.
 
