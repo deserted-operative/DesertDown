@@ -1,4 +1,4 @@
-![banner](./svgs/Banner.svg)
+![banner](./svgs/Banner.png)
 
 ## About
 
