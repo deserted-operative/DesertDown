@@ -646,6 +646,8 @@ pub static INLINE_ACTION_LOOKUP: [u32; INLINE_STATE_COUNT * ACTION_LOOKUP_WIDTH]
      13,   1,    // ID10-EL1-O-I20-EL3
       9,   2,    // TC3-EL1-O-Start-EL3
       2,   1,    // TP2-EL1-O-Start-EL1
+      2,   1,    // IP1-EL1-O-Start-EL1
+      2,   1,    // TP19-EL1-O-Start-EL1
       1,   1,    // I4-EL1
       1,   1,    // I5-EL1
      17,   1,    // ID11-EL1-O-I11-EL1
@@ -865,6 +867,8 @@ pub static INLINE_ACTION_LOOKUP: [u32; INLINE_STATE_COUNT * ACTION_LOOKUP_WIDTH]
      13,   1,    // ID10-EL2-O-I20
       9,   2,    // TC3-EL2-O-Start
       2,   1,    // TP2-EL2-O-Start-EL2
+      2,   1,    // IP1-EL2-O-Start-EL2
+      2,   1,    // TP19-EL2-O-Start-EL2
       1,   1,    // I4-EL2
       1,   1,    // I5-EL2
      17,   1,    // ID11-EL2-O-I11-EL2
@@ -1096,6 +1100,8 @@ pub static INLINE_ACTION_LOOKUP: [u32; INLINE_STATE_COUNT * ACTION_LOOKUP_WIDTH]
      14,   1,    // IT10-EL3-O-I20
      11,   2,    // TC4-EL3-O-Start
       2,   1,    // TP2-EL3-O-Start-EL3
+      2,   1,    // IP1-EL3-O-Start-EL3
+      2,   1,    // TP19-EL3-O-Start-EL3
       1,   1,    // I4-EL3
       1,   1,    // I5-EL3
      17,   1,    // ID11-EL3-O-I11-EL3
