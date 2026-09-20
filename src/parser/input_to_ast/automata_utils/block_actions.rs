@@ -1339,10 +1339,7 @@ pub static BLOCK_ACTION_LOOKUP: [u32; BLOCK_STATE_COUNT * ACTION_LOOKUP_WIDTH] =
     108,   1,    // IP106
     109,   1,    // IE7
     107,   1,    // IP107
-      1,   1,    // I147
-      1,   1,    // I148
-      1,   1,    // I149
-    110,   3,    // IC34-O-I146
+    107,   1,    // IP112-O-IP105
     107,   1,    // TP27-O-Start
       1,   1,    // I150
       1,   1,    // I151

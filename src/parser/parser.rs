@@ -66,7 +66,7 @@ pub use styling::{OutputWidth, Theme};
 pub use transition_utils::WILDCARD_COLUMN_INDEX;
 
 // constants
-pub const BLOCK_STATE_COUNT: usize = 727;
+pub const BLOCK_STATE_COUNT: usize = 724;
 pub const INLINE_STATE_COUNT: usize = 906;
 pub const SYMBOL_COUNT: usize = 129;
 
