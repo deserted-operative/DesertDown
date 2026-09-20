@@ -16,3 +16,12 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN cargo install flamegraph --locked
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        llvm-dev \
+        libclang-dev \
+        lld \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN cargo install cargo-afl

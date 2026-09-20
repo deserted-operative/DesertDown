@@ -27,7 +27,17 @@
         "--security-opt=seccomp=unconfined"
     ],
 
+    "mounts": [
+        "source=desertdown-fuzz,target=/fuzz-out,type=volume"
+    ],
+
     "remoteUser": "vscode",
 
-    "postCreateCommand": "rustup component add rustfmt clippy && sudo mkdir -p /usr/local/cargo/registry /usr/local/cargo/git && sudo chown -R vscode:vscode /usr/local/cargo/registry /usr/local/cargo/git"
+    "postCreateCommand": "rustup component add rustfmt clippy && sudo mkdir -p /usr/local/cargo/registry /usr/local/cargo/git /fuzz-out && sudo chown -R vscode:vscode /usr/local/cargo/registry /usr/local/cargo/git /fuzz-out",
+
+    "initializeCommand": "docker run --rm --privileged alpine sh -c 'echo core > /proc/sys/kernel/core_pattern' || true",
+
+    "containerEnv": {
+        "AFL_SKIP_CPUFREQ": "1"
+    }
 }

@@ -90,6 +90,17 @@ Where:
 - The `<bench-case>` flag specifies the Criterion IDs (e.g. `Demo_50000_lines`) of cases to run
   - If this argument is not specified, every case in the bench is profiled, each for 30 seconds.
 
+### Fuzzing
+
+From inside the dev container, fuzz test the input-to-AST-to-HTML process using:
+
+```
+cd fuzz && cargo afl config --build --force && cargo afl build && cargo afl fuzz -i in -o /fuzz-out/ast -x dictionary.txt target/debug/to_html
+```
+
+> [!CAUTION]
+> Be aware of usage on systems with SSDs that you don't want to experience undue read/write wear.
+
 ## Attribution
 
 Full details of licensing and attribution are provided in `./LICENSE`, but the salient points are:
