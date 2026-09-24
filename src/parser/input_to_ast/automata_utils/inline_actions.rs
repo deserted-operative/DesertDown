@@ -444,7 +444,7 @@ pub static INLINE_ACTION_LOOKUP: [u32; INLINE_STATE_COUNT * ACTION_LOOKUP_WIDTH]
      20,   1,    // IT11-O-I11
      20,   1,    // IT12-O-I9
      20,   1,    // IT13-O-I7
-     20,   1,    // IT14-O-I2
+     20,   1,    // IT14-O-I1
      20,   1,    // IT15-O-IE1
      20,   1,    // IT16-O-I12
      20,   1,    // IT17-O-I16
@@ -456,7 +456,7 @@ pub static INLINE_ACTION_LOOKUP: [u32; INLINE_STATE_COUNT * ACTION_LOOKUP_WIDTH]
       5,   1,    // IF5-O-I11
       5,   1,    // IF4-O-I9
       5,   1,    // IF3-O-I7
-      5,   1,    // IF2-O-I2
+      5,   1,    // IF2-O-I1
       5,   1,    // IF1-O-IE1
       5,   1,    // IF6-O-I12
       5,   1,    // IF7-O-I16
@@ -468,7 +468,7 @@ pub static INLINE_ACTION_LOOKUP: [u32; INLINE_STATE_COUNT * ACTION_LOOKUP_WIDTH]
      24,   2,    // IF15-O-I11
      24,   2,    // IF14-O-I9
      24,   2,    // IF13-O-I7
-     24,   2,    // IF12-O-I2
+     24,   2,    // IF12-O-I1
      24,   2,    // IF11-O-IE1
      24,   2,    // IF16-O-I12
      24,   2,    // IF17-O-I16
@@ -633,6 +633,18 @@ pub static INLINE_ACTION_LOOKUP: [u32; INLINE_STATE_COUNT * ACTION_LOOKUP_WIDTH]
       6,   1,    // IS9-EL1-O-I17
       6,   1,    // IS10-EL1-O-I20
       7,   2,    // TC2-EL1-O-Start
+      1,   1,    // I26-EL1
+      4,   1,    // IS73-EL1-O-IE1
+      4,   1,    // IS74-EL1-O-I4
+      4,   1,    // IS75-EL1-O-I7
+      4,   1,    // IS76-EL1-O-I9
+      4,   1,    // IS77-EL1-O-I11
+      4,   1,    // IS78-EL1-O-I12
+      4,   1,    // IS79-EL1-O-I16
+      4,   1,    // IS80-EL1-O-I13
+      4,   1,    // IS81-EL1-O-I17
+      4,   1,    // IS82-EL1-O-I20
+      2,   1,    // TP20-EL1-O-Start
       1,   1,    // I2-EL1
      13,   1,    // ID1-EL1-O-I11-EL3
      13,   1,    // ID2-EL1-O-I9-EL3
@@ -647,7 +659,6 @@ pub static INLINE_ACTION_LOOKUP: [u32; INLINE_STATE_COUNT * ACTION_LOOKUP_WIDTH]
       9,   2,    // TC3-EL1-O-Start-EL3
       2,   1,    // TP2-EL1-O-Start-EL1
       2,   1,    // IP1-EL1-O-Start-EL1
-      2,   1,    // TP19-EL1-O-Start-EL1
       1,   1,    // I4-EL1
       1,   1,    // I5-EL1
      17,   1,    // ID11-EL1-O-I11-EL1
@@ -665,7 +676,7 @@ pub static INLINE_ACTION_LOOKUP: [u32; INLINE_STATE_COUNT * ACTION_LOOKUP_WIDTH]
      20,   1,    // IT11-EL1-O-I11-EL1
      20,   1,    // IT12-EL1-O-I9-EL1
      20,   1,    // IT13-EL1-O-I7-EL1
-     20,   1,    // IT14-EL1-O-I2-EL1
+     20,   1,    // IT14-EL1-O-I1-EL1
      20,   1,    // IT15-EL1-O-IE1-EL1
      20,   1,    // IT16-EL1-O-I12-EL1
      20,   1,    // IT17-EL1-O-I16-EL1
@@ -677,7 +688,7 @@ pub static INLINE_ACTION_LOOKUP: [u32; INLINE_STATE_COUNT * ACTION_LOOKUP_WIDTH]
       5,   1,    // IF5-EL1-O-I11-EL1
       5,   1,    // IF4-EL1-O-I9-EL1
       5,   1,    // IF3-EL1-O-I7-EL1
-      5,   1,    // IF2-EL1-O-I2-EL1
+      5,   1,    // IF2-EL1-O-I1-EL1
       5,   1,    // IF1-EL1-O-IE1-EL1
       5,   1,    // IF6-EL1-O-I12-EL1
       5,   1,    // IF7-EL1-O-I16-EL1
@@ -689,7 +700,7 @@ pub static INLINE_ACTION_LOOKUP: [u32; INLINE_STATE_COUNT * ACTION_LOOKUP_WIDTH]
      24,   2,    // IF15-EL1-O-I11-EL1
      24,   2,    // IF14-EL1-O-I9-EL1
      24,   2,    // IF13-EL1-O-I7-EL1
-     24,   2,    // IF12-EL1-O-I2-EL1
+     24,   2,    // IF12-EL1-O-I1-EL1
      24,   2,    // IF11-EL1-O-IE1-EL1
      24,   2,    // IF16-EL1-O-I12-EL1
      24,   2,    // IF17-EL1-O-I16-EL1
@@ -868,7 +879,7 @@ pub static INLINE_ACTION_LOOKUP: [u32; INLINE_STATE_COUNT * ACTION_LOOKUP_WIDTH]
       9,   2,    // TC3-EL2-O-Start
       2,   1,    // TP2-EL2-O-Start-EL2
       2,   1,    // IP1-EL2-O-Start-EL2
-      2,   1,    // TP19-EL2-O-Start-EL2
+      1,   1,    // I26-EL2-O-I1-EL2
       1,   1,    // I4-EL2
       1,   1,    // I5-EL2
      17,   1,    // ID11-EL2-O-I11-EL2
@@ -886,7 +897,7 @@ pub static INLINE_ACTION_LOOKUP: [u32; INLINE_STATE_COUNT * ACTION_LOOKUP_WIDTH]
      20,   1,    // IT11-EL2-O-I11-EL2
      20,   1,    // IT12-EL2-O-I9-EL2
      20,   1,    // IT13-EL2-O-I7-EL2
-     20,   1,    // IT14-EL2-O-I2-EL2
+     20,   1,    // IT14-EL2-O-I1-EL2
      20,   1,    // IT15-EL2-O-IE1-EL2
      20,   1,    // IT16-EL2-O-I12-EL2
      20,   1,    // IT17-EL2-O-I16-EL2
@@ -898,7 +909,7 @@ pub static INLINE_ACTION_LOOKUP: [u32; INLINE_STATE_COUNT * ACTION_LOOKUP_WIDTH]
       5,   1,    // IF5-EL2-O-I11-EL2
       5,   1,    // IF4-EL2-O-I9-EL2
       5,   1,    // IF3-EL2-O-I7-EL2
-      5,   1,    // IF2-EL2-O-I2-EL2
+      5,   1,    // IF2-EL2-O-I1-EL2
       5,   1,    // IF1-EL2-O-IE1-EL2
       5,   1,    // IF6-EL2-O-I12-EL2
       5,   1,    // IF7-EL2-O-I16-EL2
@@ -910,7 +921,7 @@ pub static INLINE_ACTION_LOOKUP: [u32; INLINE_STATE_COUNT * ACTION_LOOKUP_WIDTH]
      24,   2,    // IF15-EL2-O-I11-EL2
      24,   2,    // IF14-EL2-O-I9-EL2
      24,   2,    // IF13-EL2-O-I7-EL2
-     24,   2,    // IF12-EL2-O-I2-EL2
+     24,   2,    // IF12-EL2-O-I1-EL2
      24,   2,    // IF11-EL2-O-IE1-EL2
      24,   2,    // IF16-EL2-O-I12-EL2
      24,   2,    // IF17-EL2-O-I16-EL2
@@ -1101,7 +1112,6 @@ pub static INLINE_ACTION_LOOKUP: [u32; INLINE_STATE_COUNT * ACTION_LOOKUP_WIDTH]
      11,   2,    // TC4-EL3-O-Start
       2,   1,    // TP2-EL3-O-Start-EL3
       2,   1,    // IP1-EL3-O-Start-EL3
-      2,   1,    // TP19-EL3-O-Start-EL3
       1,   1,    // I4-EL3
       1,   1,    // I5-EL3
      17,   1,    // ID11-EL3-O-I11-EL3
@@ -1119,7 +1129,7 @@ pub static INLINE_ACTION_LOOKUP: [u32; INLINE_STATE_COUNT * ACTION_LOOKUP_WIDTH]
      20,   1,    // IT11-EL3-O-I11-EL3
      20,   1,    // IT12-EL3-O-I9-EL3
      20,   1,    // IT13-EL3-O-I7-EL3
-     20,   1,    // IT14-EL3-O-I2-EL3
+     20,   1,    // IT14-EL3-O-I1-EL3
      20,   1,    // IT15-EL3-O-IE1-EL3
      20,   1,    // IT16-EL3-O-I12-EL3
      20,   1,    // IT17-EL3-O-I16-EL3
@@ -1131,7 +1141,7 @@ pub static INLINE_ACTION_LOOKUP: [u32; INLINE_STATE_COUNT * ACTION_LOOKUP_WIDTH]
       5,   1,    // IF5-EL3-O-I11-EL3
       5,   1,    // IF4-EL3-O-I9-EL3
       5,   1,    // IF3-EL3-O-I7-EL3
-      5,   1,    // IF2-EL3-O-I2-EL3
+      5,   1,    // IF2-EL3-O-I1-EL3
       5,   1,    // IF1-EL3-O-IE1-EL3
       5,   1,    // IF6-EL3-O-I12-EL3
       5,   1,    // IF7-EL3-O-I16-EL3
@@ -1143,7 +1153,7 @@ pub static INLINE_ACTION_LOOKUP: [u32; INLINE_STATE_COUNT * ACTION_LOOKUP_WIDTH]
      24,   2,    // IF15-EL3-O-I11-EL3
      24,   2,    // IF14-EL3-O-I9-EL3
      24,   2,    // IF13-EL3-O-I7-EL3
-     24,   2,    // IF12-EL3-O-I2-EL3
+     24,   2,    // IF12-EL3-O-I1-EL3
      24,   2,    // IF11-EL3-O-IE1-EL3
      24,   2,    // IF16-EL3-O-I12-EL3
      24,   2,    // IF17-EL3-O-I16-EL3

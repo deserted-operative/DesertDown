@@ -67,7 +67,7 @@ pub use transition_utils::WILDCARD_COLUMN_INDEX;
 
 // constants
 pub const BLOCK_STATE_COUNT: usize = 724;
-pub const INLINE_STATE_COUNT: usize = 906;
+pub const INLINE_STATE_COUNT: usize = 916;
 pub const SYMBOL_COUNT: usize = 129;
 
 pub const ACTION_LOOKUP_WIDTH: usize = 2;
