@@ -34,12 +34,13 @@ cargo run --release -- <input-file> > <output-file>
 Usage to write HTML to *standard output*:
 
 ```
-cargo run --release -- <input-file> --html [--theme light|dark] [--width fixed|full] [--allow-links] [--fragment]
+cargo run --release -- <input-file> --html [--theme light|dark|reactive] [--width fixed|full] [--allow-links] [--fragment]
 ```
 
 Where:
 
-- The `--theme light|dark` (alternatively, `--light`, `--dark`) flag determines whether the HTML output uses a light or dark theme.
+- The `--theme light|dark|reactive` (alternatively, `--light`, `--dark`, `--reactive`) flag determines whether the HTML output uses a light, dark, or reactive theme.
+  - The reactive theme responds to browser or system preferences as to whether light or dark theming should be used.
   - If the flag is not specified, light theming is the default.
 - The `--width fixed|full` (alternatively, `--fixed-width`, `--full-width`) flag determines whether the HTML output consumes up to a fixed available width, or the full width available to it when being rendered.
   - If the flag is not specified, fixed width output is the default.
@@ -52,7 +53,7 @@ Where:
 Of course, one can redirect this to a file:
 
 ```
-cargo run --release -- <input-file> --html [--theme light|dark] [--width fixed|full] [--allow-links] [--fragment] > <output-file>
+cargo run --release -- <input-file> --html [--theme light|dark|reactive] [--width fixed|full] [--allow-links] [--fragment] > <output-file>
 ```
 
 ### Benchmarking

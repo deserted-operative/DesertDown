@@ -1,7 +1,7 @@
 use desert_down::parser::{self, LinkPermissions, OutputWidth, Theme};
 use std::{env, fs, path::Path, process};
 
-const USAGE_INFO: &str = "Usage: cargo run -- <input-file> [--html] [--theme light|dark] [--width fixed|full] [--allow-links] [--fragment]";
+const USAGE_INFO: &str = "Usage: cargo run -- <input-file> [--html] [--theme light|dark|reactive] [--width fixed|full] [--allow-links] [--fragment]";
 
 fn main() {
     // for CL args
@@ -30,16 +30,16 @@ fn main() {
 
             "--allow-links" => links_allowed = LinkPermissions::Allowed,
 
-            // --theme dark, with --light and --dark below as allowed shorthands
+            // --theme dark, with --light, --dark, and --reactive below as allowed shorthands
             "--theme" => {
                 let Some(name) = arguments.next() else {
-                    eprintln!("--theme requires a theme: light or dark");
+                    eprintln!("--theme requires a theme: light, dark, or reactive");
                     eprintln!("{USAGE_INFO}");
                     process::exit(1);
                 };
 
                 let Some(chosen) = Theme::parse_potential_theme_string(&name) else {
-                    eprintln!("Unknown theme {name:?}, expected light or dark");
+                    eprintln!("Unknown theme {name:?}, expected light, dark ,or reactive");
                     eprintln!("{USAGE_INFO}");
                     process::exit(1);
                 };
@@ -49,6 +49,7 @@ fn main() {
 
             "--light" => theme = Theme::Light,
             "--dark" => theme = Theme::Dark,
+            "--reactive" => theme = Theme::Reactive,
 
             // --width full, with --fixed-width and --full-width below as allowed shorthands
             "--width" => {

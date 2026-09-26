@@ -4,6 +4,8 @@ pub enum Theme {
     Light,
 
     Dark,
+
+    Reactive,
 }
 
 impl Theme {
@@ -19,6 +21,10 @@ impl Theme {
             return Some(Theme::Dark);
         }
 
+        if potential_theme.eq_ignore_ascii_case("reactive") {
+            return Some(Theme::Reactive);
+        }
+
         None
     }
 
@@ -29,6 +35,7 @@ impl Theme {
         match self {
             Theme::Light => "light",
             Theme::Dark => "dark",
+            Theme::Reactive => "reactive",
         }
     }
 
@@ -38,6 +45,7 @@ impl Theme {
         match self {
             Theme::Light => LIGHT_STYLING,
             Theme::Dark => DARK_STYLING,
+            Theme::Reactive => REACTIVE_STYLING,
         }
     }
 
@@ -67,6 +75,8 @@ impl Theme {
             (Theme::Light, OutputWidth::Full) => "J8i56134E1I2BLEpcTxd5UGXY/4A6YhlrPWr1FsCXiE=",
             (Theme::Dark, OutputWidth::Fixed) => "5onbELHMHuwBOgtdWL6FkEf3VUeYoMhmHgNdVaQGYxU=",
             (Theme::Dark, OutputWidth::Full) => "P4PH6dH6gIL93G6wBiCzH/RclTCd8AMLlx/yDRdBRC4=",
+            (Theme::Reactive, OutputWidth::Fixed) => "FQUBSQSwv6iCc+geJOruPlR3DXd5zIO+8ykSGR1q1ng=",
+            (Theme::Reactive, OutputWidth::Full) => "vTIDPZUetj3jAT6MCzdcTcNKrTSnWOPG/E4aYT11OIY=",
         }
     }
 }
@@ -202,6 +212,78 @@ const DARK_STYLING: &str = r#"
 
     --dd-colour-bg-opacity:5%;
     --dd-colour-border-opacity:50%;
+}
+"#;
+
+// reacts to light/dark browser or system theme, rather than being fixed to one theme
+const REACTIVE_STYLING: &str = r#"
+:root{
+    color-scheme: light;
+
+    --dd-bg: #ffffff;
+    --dd-bg-secondary: #f6f6f6;
+    --dd-thead_bg: #eaeaea;
+    
+    --dd-lines: #d3d3d3;    
+
+    --dd-text: #000000;
+    --dd-italic: #41337A;
+    --dd-bold: #246EB9;
+    --dd-link: #3066be;
+    --dd-quiet: #565656;
+
+    --dd-highlight-colour-1: #f9c22e;
+    --dd-highlight-colour-1-text: #000000;
+    --dd-highlight-colour-2: #a5be00;
+    --dd-highlight-colour-2-text: #000000;
+
+    --dd-amber: #f18701;
+    --dd-blue: #4070c9;
+    --dd-cyan: #31929b;
+    --dd-green: #498a42;
+    --dd-grey: #595959;
+    --dd-pink: #d91c5b;
+    --dd-purple: #7546af;
+    --dd-red: #b11b27;
+    --dd-teal: #024F4a;
+
+    --dd-colour-bg-opacity: 5%;
+    --dd-colour-border-opacity: 50%;
+}
+@media (prefers-color-scheme: dark){
+    :root{
+        color-scheme: dark;
+
+        --dd-bg: #111111;
+        --dd-bg-secondary: #161616;
+        --dd-thead_bg: #202731;
+
+        --dd-lines: #444450;
+        
+        --dd-text: #eeeeee;
+        --dd-italic: #f4562a;
+        --dd-bold: #ef438b;
+        --dd-link: #5cadff;
+        --dd-quiet: #aaaaaa;
+        
+        --dd-highlight-colour-1: #443300;
+        --dd-highlight-colour-1-text: #ffda5d;
+        --dd-highlight-colour-2: #094733;
+        --dd-highlight-colour-2-text: #8bffcf;
+
+        --dd-amber:#d98324;
+        --dd-blue:#329bec;
+        --dd-cyan:#1adbd5;
+        --dd-green:#5af924;
+        --dd-grey:#576a75;
+        --dd-pink:#ed317f;
+        --dd-purple:#977be0;
+        --dd-red:#fb3741;
+        --dd-teal:#6bffdc;
+
+        --dd-colour-bg-opacity:5%;
+        --dd-colour-border-opacity:50%;
+    }
 }
 "#;
 
