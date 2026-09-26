@@ -71,12 +71,12 @@ impl Theme {
     /// Returns base64 encoded SHA-256 of the styling, accounting for theme and output width parameters
     pub const fn stylesheet_hash(self, output_width: OutputWidth) -> &'static str {
         match (self, output_width) {
-            (Theme::Light, OutputWidth::Fixed) => "+op+z50sCKyZ+dVKEL1DPSfJR0oRuCiYfWSSWvzIGD4=",
-            (Theme::Light, OutputWidth::Full) => "J8i56134E1I2BLEpcTxd5UGXY/4A6YhlrPWr1FsCXiE=",
-            (Theme::Dark, OutputWidth::Fixed) => "5onbELHMHuwBOgtdWL6FkEf3VUeYoMhmHgNdVaQGYxU=",
-            (Theme::Dark, OutputWidth::Full) => "P4PH6dH6gIL93G6wBiCzH/RclTCd8AMLlx/yDRdBRC4=",
-            (Theme::Reactive, OutputWidth::Fixed) => "FQUBSQSwv6iCc+geJOruPlR3DXd5zIO+8ykSGR1q1ng=",
-            (Theme::Reactive, OutputWidth::Full) => "vTIDPZUetj3jAT6MCzdcTcNKrTSnWOPG/E4aYT11OIY=",
+            (Theme::Light, OutputWidth::Fixed) => "DKGjv9ui2gsYfTpRxQhOqSbC5v0rscMCa2FvG3gQWVc=",
+            (Theme::Light, OutputWidth::Full) => "jeexBJACK6Da9gD94k8yPs97VDzWGnJ2PWfgTuO8yVo=",
+            (Theme::Dark, OutputWidth::Fixed) => "zULB4CWDg4da/j8WNFJKHCRt3uVt4DfSIubG7SkFwm0=",
+            (Theme::Dark, OutputWidth::Full) => "hqPNAaMlIKVuozrP7E5F9nC6ZSPmLP8K0usQ+UWBSMM=",
+            (Theme::Reactive, OutputWidth::Fixed) => "rofYvP0lpYW+xYxG+uzhkvWdyGTt3YryQgSG2AojH+Y=",
+            (Theme::Reactive, OutputWidth::Full) => "fNYuYfFnc5rTYtasxDUJZvcvaBrwzRT89or3W5SSBZM=",
         }
     }
 }
@@ -671,6 +671,11 @@ padding-right:0;
     font-weight: 600;
     line-height: 1.5;
     padding-bottom: .5em;
+}
+
+/* callouts with only a title need no spacing below the title */
+.callout-title:last-child{
+    padding-bottom: 0;
 }
 
 /* bold and italic text in callout title shouldn't use their coloured styling, instead inheriting callout title colour */
