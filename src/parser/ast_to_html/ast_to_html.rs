@@ -104,6 +104,7 @@ pub(super) struct HtmlRenderer<'input_string> {
         vars for tracking table state
         works as tables only allow inlines in cells, so at most one table can be open at any given time, thus can keep here, rather than on TreeFrames
     */
+
     // true when writing out into the table header row
     // NOTE that the automaton refers to the separator row as the header row. Here, the header row is the row above the separator row
     pub(super) in_table_header_row: bool,
@@ -119,6 +120,11 @@ pub(super) struct HtmlRenderer<'input_string> {
 
     // whether links and embedded links are allowed or blocked in HTML output
     pub(super) link_permission_status: LinkPermissions,
+
+    /*
+        var for tracking where num lists are opened, so that placeholders for width styling can be replaced once actual width is known at closing-time
+    */
+    pub(super) open_ordered_lists: Vec<(usize, usize)>,
 }
 
 // to-HTML specific methods for AST struct
@@ -140,6 +146,7 @@ impl AST {
             aligned_column_count: 0,
             table_alignments: [TableColumnAlignment::None; MAX_ALIGNED_TABLE_COLUMNS],
             link_permission_status,
+            open_ordered_lists: Vec::new(),
         };
 
         // process the AST for the HTML
@@ -436,9 +443,9 @@ impl<'render> HtmlRenderer<'render> {
                             indented, not a continuation of the list
                     
                     folding breaks aren't shown, but they must close the open block to achieve their goal
-                    hence, open a block that pushes no tags to the HTML
+                    hence, open a block that pushes only a comment to the HTML (push a comment so that the folding script can determine that the preceding and following blocks are separate)
                 */
-                self.open_block(b"", node_id, node.node_type);
+                self.open_block(b"<!--folding break-->\n", node_id, node.node_type);
             }
 
             NodeType::IndentBlock => {
@@ -565,6 +572,11 @@ impl<'render> HtmlRenderer<'render> {
                         self.html_output_array.extend_from_slice(b" value=\"");
                         self.escape_and_push_to_html(start, end);
                         self.html_output_array.push(b'"');
+
+                        // track the greatest number of digits in a num list item opener, for the list's width styling
+                        if let Some((_, most_digits)) = self.open_ordered_lists.last_mut() {
+                            *most_digits = (*most_digits).max((end - start) as usize);
+                        }
                     }
                 }
 
@@ -920,8 +932,18 @@ impl<'render> HtmlRenderer<'render> {
 
         // write the opener/open the table block/do nothing if no container should be open
         match desired_container {
-            BlockContainers::UnorderedList => self.html_output_array.extend_from_slice(b"<ul>\n"),
-            BlockContainers::OrderedList => self.html_output_array.extend_from_slice(b"<ol>\n"),
+            BlockContainers::UnorderedList => self.html_output_array.extend_from_slice(b"<ul role=\"list\">\n"),
+            BlockContainers::OrderedList => {
+                // push the list opener with a placeholder for the number of digits used by the widest list item (this can - and will - be filled in at list closing)
+                self.html_output_array.extend_from_slice(b"<ol role=\"list\" class=\"number-width-");
+                
+                // record in the open ordered lists array where the placeholder digits for the number of digits in the widest num list item in the list are
+                // this is so it can be replaced with the true value at closing time without incurring a search to find the placeholder
+                self.open_ordered_lists.push((self.html_output_array.len(), 1));
+                
+                // placeholder takes up two characters - key to note in the closing section below
+                self.html_output_array.extend_from_slice(b"01\">\n");
+            }
             BlockContainers::Table => self.open_table_block(node_id),
             BlockContainers::None => {}
         }
@@ -931,7 +953,21 @@ impl<'render> HtmlRenderer<'render> {
     fn close_container(&mut self, container: BlockContainers) {
         match container {
             BlockContainers::UnorderedList => self.html_output_array.extend_from_slice(b"</ul>\n"),
-            BlockContainers::OrderedList => self.html_output_array.extend_from_slice(b"</ol>\n"),
+            BlockContainers::OrderedList => {
+                // replace the placeholder for the list width, so styling on list is correct
+                if let Some((placeholder, num_of_digits_in_widest_item)) = self.open_ordered_lists.pop() {
+                    // min of the largest number of digits in list opener or 99
+                    // (99 as it's the largets two digit int, and the placeholder reserves two characters)
+                    let num_of_digits_in_widest_item = num_of_digits_in_widest_item.min(99) as u8;
+
+                    // set the digits
+                    self.html_output_array[placeholder] = b'0' + num_of_digits_in_widest_item / 10;
+                    self.html_output_array[placeholder + 1] = b'0' + num_of_digits_in_widest_item % 10;
+                }
+
+                // close list
+                self.html_output_array.extend_from_slice(b"</ol>\n");
+            }
 
             BlockContainers::Table => {
                 if self.in_table_header_row {

@@ -1,7 +1,7 @@
-use desert_down::parser::{self, LinkPermissions, OutputWidth, Theme};
+use desert_down::parser::{self, Folding, LinkPermissions, OutputWidth, Theme};
 use std::{env, fs, path::Path, process};
 
-const USAGE_INFO: &str = "Usage: cargo run -- <input-file> [--html] [--theme light|dark|reactive] [--width fixed|full] [--allow-links] [--fragment]";
+const USAGE_INFO: &str = "Usage: cargo run -- <input-file> [--html] [--theme=light|dark|reactive] [--width=fixed|full] [--allow-links] [--foldable[=headings,list-items,callouts]] [--fragment]";
 
 fn main() {
     // for CL args
@@ -18,28 +18,54 @@ fn main() {
     // reject links and embeds by default, for security
     let mut links_allowed = LinkPermissions::Blocked;
 
+    // no folding by default
+    let mut folding = Folding::DISABLED;
+
     // read CL args
-    let mut arguments = env::args().skip(1);
+    let arguments = env::args().skip(1);
 
     // process CL args
-    while let Some(argument) = arguments.next() {
-        match argument.as_str() {
-            "--html" => should_output_html = true,
+    for argument in arguments {
+        let (option, value) = match argument.split_once('=') {
+            Some((option, value)) if option.starts_with("--") => (option, Some(value)),
+            _ => (argument.as_str(), None),
+        };
 
-            "--fragment" => should_output_fragment = true,
+        match (option, value) {
+            ("--html", None) => should_output_html = true,
 
-            "--allow-links" => links_allowed = LinkPermissions::Allowed,
+            ("--fragment", None) => should_output_fragment = true,
 
-            // --theme dark, with --light, --dark, and --reactive below as allowed shorthands
-            "--theme" => {
-                let Some(name) = arguments.next() else {
-                    eprintln!("--theme requires a theme: light, dark, or reactive");
+            ("--allow-links", None) => links_allowed = LinkPermissions::Allowed,
+
+            // --foldable applies to headings, callouts, and list items
+            // --foldable=headings,callouts,list-items applies to only those listed
+            ("--foldable", None) => folding = Folding::ALL,
+
+            ("--foldable", Some(folding_targets)) => {
+                let Some(chosen) = Folding::parse_potential_folding_targets(folding_targets) else {
+                    eprintln!(
+                        "Unknown folding {folding_targets:?}, expected a comma separated list of headings, and/or list-items, and/or callouts"
+                    );
                     eprintln!("{USAGE_INFO}");
                     process::exit(1);
                 };
 
-                let Some(chosen) = Theme::parse_potential_theme_string(&name) else {
-                    eprintln!("Unknown theme {name:?}, expected light, dark ,or reactive");
+                folding = chosen;
+            }
+
+            // --theme=dark, with --light, --dark, and --reactive below as allowed shorthands
+            ("--theme", None) => {
+                eprintln!(
+                    "--theme requires a theme: --theme=light, --theme=dark, or --theme=reactive"
+                );
+                eprintln!("{USAGE_INFO}");
+                process::exit(1);
+            }
+
+            ("--theme", Some(name)) => {
+                let Some(chosen) = Theme::parse_potential_theme_string(name) else {
+                    eprintln!("Unknown theme {name:?}, expected light, dark, or reactive");
                     eprintln!("{USAGE_INFO}");
                     process::exit(1);
                 };
@@ -47,19 +73,19 @@ fn main() {
                 theme = chosen;
             }
 
-            "--light" => theme = Theme::Light,
-            "--dark" => theme = Theme::Dark,
-            "--reactive" => theme = Theme::Reactive,
+            ("--light", None) => theme = Theme::Light,
+            ("--dark", None) => theme = Theme::Dark,
+            ("--reactive", None) => theme = Theme::Reactive,
 
-            // --width full, with --fixed-width and --full-width below as allowed shorthands
-            "--width" => {
-                let Some(name) = arguments.next() else {
-                    eprintln!("--width needs a width: fixed or full");
-                    eprintln!("{USAGE_INFO}");
-                    process::exit(1);
-                };
+            // --width=full, with --fixed-width and --full-width below as allowed shorthands
+            ("--width", None) => {
+                eprintln!("--width needs a width: --width=fixed or --width=full");
+                eprintln!("{USAGE_INFO}");
+                process::exit(1);
+            }
 
-                let Some(chosen) = OutputWidth::parse_potential_output_width_string(&name) else {
+            ("--width", Some(name)) => {
+                let Some(chosen) = OutputWidth::parse_potential_output_width_string(name) else {
                     eprintln!("Unknown width {name:?}, expected fixed or full");
                     eprintln!("{USAGE_INFO}");
                     process::exit(1);
@@ -68,9 +94,10 @@ fn main() {
                 width = chosen;
             }
 
-            "--fixed-width" => width = OutputWidth::Fixed,
-            "--full-width" => width = OutputWidth::Full,
+            ("--fixed-width", None) => width = OutputWidth::Fixed,
+            ("--full-width", None) => width = OutputWidth::Full,
 
+            // includes options given a value they don't take, eg. --html=yes
             _ if argument.starts_with('-') => {
                 eprintln!("Unknown option {argument:?}");
                 eprintln!("{USAGE_INFO}");
@@ -80,7 +107,11 @@ fn main() {
             _ if input_file_path.is_none() => input_file_path = Some(argument),
 
             // a second file, which there is nothing sensible to do with
-            _ => {}
+            _ => {
+                eprintln!("Unexpected argument {argument:?}, only one input file can be given");
+                eprintln!("{USAGE_INFO}");
+                process::exit(1);
+            }
         }
     }
 
@@ -121,5 +152,5 @@ fn main() {
         .and_then(|stem| stem.to_str())
         .unwrap_or("");
 
-    ast.ast_to_html_document_to_stdout(&input, theme, width, links_allowed, title);
+    ast.ast_to_html_document_to_stdout(&input, theme, width, links_allowed, folding, title);
 }

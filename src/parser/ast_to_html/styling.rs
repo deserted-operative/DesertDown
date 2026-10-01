@@ -71,12 +71,12 @@ impl Theme {
     /// Returns base64 encoded SHA-256 of the styling, accounting for theme and output width parameters
     pub const fn stylesheet_hash(self, output_width: OutputWidth) -> &'static str {
         match (self, output_width) {
-            (Theme::Light, OutputWidth::Fixed) => "DKGjv9ui2gsYfTpRxQhOqSbC5v0rscMCa2FvG3gQWVc=",
-            (Theme::Light, OutputWidth::Full) => "jeexBJACK6Da9gD94k8yPs97VDzWGnJ2PWfgTuO8yVo=",
-            (Theme::Dark, OutputWidth::Fixed) => "zULB4CWDg4da/j8WNFJKHCRt3uVt4DfSIubG7SkFwm0=",
-            (Theme::Dark, OutputWidth::Full) => "hqPNAaMlIKVuozrP7E5F9nC6ZSPmLP8K0usQ+UWBSMM=",
-            (Theme::Reactive, OutputWidth::Fixed) => "rofYvP0lpYW+xYxG+uzhkvWdyGTt3YryQgSG2AojH+Y=",
-            (Theme::Reactive, OutputWidth::Full) => "fNYuYfFnc5rTYtasxDUJZvcvaBrwzRT89or3W5SSBZM=",
+            (Theme::Light, OutputWidth::Fixed) => "3xgmSU5jbev6e2T9QvBkWgEsnIC2xsHguQWdsVTMA9g=",
+            (Theme::Light, OutputWidth::Full) => "HIJnHu6j50U0NLByjZoRqA5/6Fxo8WAOA6Wf4+E6JRU=",
+            (Theme::Dark, OutputWidth::Fixed) => "Ht86Hepgn/0rwzA1WzFbppzJjJJqKLzNp3r/hjNLr+A=",
+            (Theme::Dark, OutputWidth::Full) => "bpMNX7uLxVd446UaJbBYDTQNLpTLy28HzLN6bL8/Dtc=",
+            (Theme::Reactive, OutputWidth::Fixed) => "OiSIocMaIrW2LX7RiJDtBFujy/5RD2RJxDDeRP4yyzc=",
+            (Theme::Reactive, OutputWidth::Full) => "0R+/c/bpDPvzkoKCkCCDBe/z0xppN11u5/AoW0lhiqY=",
         }
     }
 }
@@ -297,6 +297,9 @@ const STYLING_RULES: &str = r#"
 
 html{-webkit-text-size-adjust: 100%}
 
+/* print displayed, including backgrounds */
+html{-webkit-print-color-adjust: exact; print-color-adjust: exact}
+
 body{
     background: var(--dd-bg);
     color: var(--dd-text);
@@ -311,6 +314,7 @@ body{
     padding: 2.5rem 1.25rem 2.5rem; /* top, left/right, bottom */
     margin: 0 auto;
     overflow-wrap: break-word;
+    --dd-text-rise: .05em;
 }
 
 /*
@@ -436,137 +440,124 @@ padding-right:0;
 /*
     LISTS
 */
-.desert-down ul,.desert-down ol{margin: 0; padding-left: 1.5rem}
-.desert-down li{margin: 0}
+.desert-down ul,.desert-down ol{margin: 0; padding-left: 1.5rem; list-style: none}
 
-/* dash, asterisk, plus list items - use bullet marker */
-.desert-down ul{list-style-type: disc}
-
-/* numbered list marker can vary in width (with the quantity of numbers in the list item opening), thus take the width of the widest list item */
-.desert-down ol{
-    list-style: none;
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    column-gap: .5rem;
-    padding-left: 0;
+/*
+    dash, asterisk, plus list items - use bullet marker
+*/
+.desert-down li{
+    margin: 0;
+    position: relative;
+    --dd-line: 1.65em;
+    --dd-marker-axis-x: -.7em;
+    --dd-marker-axis-y: calc(var(--dd-line) / 2 - var(--dd-text-rise));
+    --dd-bullet-half: .175em;
+    --dd-checkbox-half: .4em;
+    --dd-number-half: .36em;
 }
+
+@supports (height: 1lh){
+    .desert-down li{--dd-line: 1lh}
+}
+
+.desert-down ul > li:not(.check-list-item)::before{
+    content: "";
+    position: absolute;
+    left: var(--dd-marker-axis-x);
+    top: var(--dd-marker-axis-y);
+    width: calc(2 * var(--dd-bullet-half));
+    height: calc(2 * var(--dd-bullet-half));
+    border-radius: 50%;
+    background: currentColor;
+    transform: translate(-50%, -50%);
+}
+
+.desert-down ol{
+    padding-left: 0;
+    --dd-number-width: 1.5ch;
+}
+
+.desert-down ol.number-width-02{--dd-number-width: 2.5ch}
+.desert-down ol.number-width-03{--dd-number-width: 3.5ch}
+.desert-down ol.number-width-04{--dd-number-width: 4.5ch}
+.desert-down ol.number-width-05{--dd-number-width: 5.5ch}
+.desert-down ol.number-width-06{--dd-number-width: 6.5ch}
+.desert-down ol.number-width-07{--dd-number-width: 7.5ch}
+.desert-down ol.number-width-08{--dd-number-width: 8.5ch}
+.desert-down ol.number-width-09{--dd-number-width: 9.5ch}
+.desert-down ol.number-width-10{--dd-number-width: 10.5ch}
+.desert-down ol.number-width-11{--dd-number-width: 11.5ch}
+.desert-down ol.number-width-12{--dd-number-width: 12.5ch}
 
 /* child combinator (>) means list items will be selected only if they are children of an ordered list */
 .desert-down ol > li{
-    display: grid;
-    grid-template-columns: subgrid;
-    grid-column: 1/-1; /* list item span all columns in the grid */
+    padding-left: calc(var(--dd-number-width) + .5rem);
 }
 
 /* selects the pseudo-element before a list item's contents, if that list item is a child of an ordered list, and sets the content of this element to the list item's number and appends a dot */
 /* ie. the list item in an ordered list is styled with no marker, and one is added, so that the numbers need not be sequential */
 .desert-down ol > li::before{
     content: attr(value) ".";
-    text-align: right;
-    grid-column: 1;
+    position: absolute;
+    top: 0;
+    right: calc(100% - var(--dd-number-width));
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
 }
-
-/* sets everything else (ie. the content) of ordered list items to the seond column (marker, as set above, in first) */
-.desert-down ol > li > * {grid-column: 2}
 
 
 /*
-    LIST INDENTATION LINES
+    LIST TRACE LINES
 */
-
-/* alignment and spacing for dash, asterisk, plus, numbered list items */
-/* numbered list items align to where the centre of an unordered list bullet would be, as their varying width makes it aligning varying their alignment less feasible */
-.desert-down ul > li,
-.desert-down ol > li{
-    position:relative;
-    --dd-marker-axis-x: -.7em; /* x position for centring the lines from/to bullet and checkbox markers */
-    --dd-trace-from: .5em; /* vertical spacing below the marker being drawn from */
-    --dd-trace-to: .6em; /* vertical spacing above the marker being drawn to */
+.desert-down li{
+    --dd-trace-gap: .375em;
+    --dd-marker-half: var(--dd-bullet-half);
+    --dd-next-marker-half: var(--dd-bullet-half);
+    --dd-trace-end: calc(var(--dd-next-marker-half) + var(--dd-trace-gap) - var(--dd-marker-axis-y));
 }
 
-/* spacing for a checkbox marker - different as checkbox is taller than bullet */
-.desert-down ul > li.check-list-item{
-    --dd-trace-from: .75em;
-    --dd-trace-to: .75em;
+.desert-down li.check-list-item{--dd-marker-half: var(--dd-checkbox-half)}
+.desert-down ol > li{--dd-marker-half: var(--dd-number-half)}
+
+/* to a checkbox */
+.desert-down li:has(+ .check-list-item),
+.desert-down :is(ul,ol):has(+ ul > .check-list-item:first-child) > li:last-child{
+    --dd-next-marker-half: var(--dd-checkbox-half);
 }
 
-/* spacing for a number marker - different as height different to bullets and checkboxes */
-.desert-down ol > li{
-    --dd-trace-from: .75em;
-    --dd-trace-to: .8em;
+/* to a number */
+.desert-down ol > li,
+.desert-down ul:has(+ ol) > li:last-child{
+    --dd-next-marker-half: var(--dd-number-half);
 }
 
-/* bullet marker to checkbox marker */
-.desert-down ul > li:not(.check-list-item):has(+ li.check-list-item){
-    --dd-trace-to: .8em;
+/* to a bullet - the default, other than from the last number of a numbered list */
+.desert-down ol:has(+ ul > li:first-child:not(.check-list-item)) > li:last-child{
+    --dd-next-marker-half: var(--dd-bullet-half);
 }
 
-/* checkbox marker to bullet marker */
-.desert-down ul > li.check-list-item:has(+ li:not(.check-list-item)){
-    --dd-trace-to: .6em;
+/* to no marker - ends level with the bottom of the text of the last line (as text is as tall as a number, about the same centre) */
+.desert-down :is(ul,ol):not(:has(+ :is(ul,ol))) > li:last-child{
+    --dd-trace-end: calc(var(--dd-line) - var(--dd-marker-axis-y) - var(--dd-number-half));
 }
 
-/* bullet, checkbox, number to number */
-.desert-down :is(ul,ol):has(+ ol) > li:last-child{
-    --dd-trace-to: .85em;
-}
-
-/* bullet, checkbox, number to bullet */
-.desert-down :is(ul,ol):has(+ ul > li:first-child:not(.check-list-item)) > li:last-child{
-    --dd-trace-to: .6em;
-}
-
-/* bullet, checkbox, number to checkbox */
-.desert-down :is(ul,ol):has(+ ul > li:first-child.check-list-item) > li:last-child{
-    --dd-trace-to: .75em;
-}
-
-.desert-down ul > li:not(:last-child)::after,
-.desert-down ol > li:not(:last-child)::after,
-.desert-down :is(ul,ol):has(+ :is(ul,ol)) > li:last-child::after{
-    top: max(
-        calc(.825em + var(--dd-trace-from)),
-        calc(4.125em - var(--dd-trace-to) - 100%)
-    );
-    top: max(
-        calc(.5lh + var(--dd-trace-from)),
-        calc(2.5lh - var(--dd-trace-to) - 100%)
-    );
-
-    bottom: calc(-.825em + var(--dd-trace-to));
-    bottom: calc(-.5lh + var(--dd-trace-to));
-}
-
-.desert-down :is(ul,ol):not(:has(+ :is(ul,ol))) > li:last-child::after{
-    top: max(
-        calc(.825em + var(--dd-trace-from)),
-        calc(3.3em - var(--dd-trace-to) - 100%)
-    );
-    top: max(
-        calc(.5lh + var(--dd-trace-from)),
-        calc(2lh - var(--dd-trace-to) - 100%)
-    );
-
-    bottom: var(--dd-trace-to);
-}
-
-.desert-down ul > li::after{
-    left: var(--dd-marker-axis-x);
-}
-
-.desert-down ol > li::after{
-    left: calc(1.5rem + var(--dd-marker-axis-x));
-}
-
-.desert-down ul > li::after,
-.desert-down ol > li::after{
+.desert-down li::after{
     content: "";
     position: absolute;
+    left: var(--dd-marker-axis-x);
+    top: max(
+        calc(var(--dd-marker-axis-y) + var(--dd-marker-half) + var(--dd-trace-gap)),
+        calc(2 * var(--dd-line) - var(--dd-trace-end) - 100%)
+    );
+    bottom: var(--dd-trace-end);
+    width: 1px;
+    border-radius: .5px; /* rounded ends */
     transform: translateX(-50%);
     background: var(--dd-lines);
-    width: 1px;
     pointer-events: none;
 }
+
+.desert-down ol > li::after{left: var(--dd-number-width)}
 
 
 /*
@@ -580,11 +571,10 @@ padding-right:0;
     font: inherit;
 
     position: absolute;
-    left: calc(var(--dd-marker-axis-x) - .4em); /* subtract half the checkbox width */
-    top: .375em; /* fallback based on 1.65 line height */
-    top: calc((1lh - .8em) / 2 - .05em);
-    width: .8em;
-    height: .8em;
+    left: calc(var(--dd-marker-axis-x) - var(--dd-checkbox-half));
+    top: calc(var(--dd-marker-axis-y) - var(--dd-checkbox-half));
+    width: calc(2 * var(--dd-checkbox-half));
+    height: calc(2 * var(--dd-checkbox-half));
     margin: 0;
     padding: 0;
     border: 1px solid var(--dd-lines);
@@ -639,10 +629,11 @@ padding-right:0;
     THEMATIC BREAKS
 */
 .desert-down hr{
-    height: 0;
+    height: 1px;
     margin: 0;
     border: 0;
-    border-top: 1px solid var(--dd-lines);
+    border-radius: .5px; /* rounded ends */
+    background: var(--dd-lines);
 }
 
 
@@ -657,7 +648,7 @@ padding-right:0;
 */
 .callout{
     margin: 0;
-    padding: .75rem 1rem;
+    padding: .75rem 1.25rem;
     --dd-callout: var(--dd-grey); /* default to grey */
     border: 2px solid color-mix(in srgb, var(--dd-callout) var(--dd-colour-border-opacity), transparent);
     border-radius: 6px;
@@ -888,6 +879,19 @@ padding-right:0;
     border: 1px solid var(--dd-lines);
     border-radius: 6px;
     background: var(--dd-bg-secondary);
+}
+
+/*
+    PRINTING
+*/
+@media print{
+    /* code blocks and tables scroll horizontally in HTML, but wrap for print */
+    .desert-down pre{white-space: pre-wrap; overflow-wrap: anywhere}
+    .desert-down .table-scroll{overflow-x: visible}
+    .desert-down table{width: auto}
+
+    /* keep headings on the same page as what follows them */
+    .desert-down :is(h1,h2,h3,h4,h5,h6){break-after: avoid}
 }
 
 /*
