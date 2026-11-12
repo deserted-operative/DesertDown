@@ -26,6 +26,8 @@ mod transition_utils;
 mod ast_to_html;
 #[path = "ast_to_html/conditional_styling.rs"]
 mod conditional_styling;
+#[path = "ast_to_html/folding.rs"]
+mod folding;
 #[path = "ast_to_html/html_document_utils.rs"]
 mod html_document_utils;
 #[path = "ast_to_html/html_escape_utils.rs"]
@@ -59,6 +61,7 @@ pub use block_transitions::BLOCK_TRANSITIONS;
 pub use char_buffer_utils::ParserStructures;
 pub use inline_parser::{INLINE_INITIAL_STATE, MAX_EMPHASIS_LEVEL, inline_parser};
 pub use inline_transitions::INLINE_TRANSITIONS;
+pub use folding::{FOLDING_SCRIPT, FOLDING_SCRIPT_HASH, FOLDING_STYLING, FOLDING_STYLING_HASH, Folding};
 pub use input_string_utils::{InputChar, InputCharsForParsing, InputStringRange, InputStringView};
 pub use links::LinkPermissions;
 pub use parser_utils::Job;

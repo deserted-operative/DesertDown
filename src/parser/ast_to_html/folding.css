@@ -1,0 +1,162 @@
+.desert-down .dd-fold {
+    appearance: none;
+    -webkit-appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: calc(-1 * var(--dd-text-rise));
+    width: 1rem;
+    --dd-fold-size: .4rem;
+    --dd-fold-stroke: 2px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 4px;
+    background: none;
+    color: inherit;
+    font: inherit;
+    vertical-align: top;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* folding icon - points downwards when unfolded, to the right when folded */
+.desert-down .dd-fold::before {
+    content: "";
+    width: var(--dd-fold-size);
+    height: var(--dd-fold-size);
+    border-right: var(--dd-fold-stroke) solid var(--dd-quiet);
+    border-bottom: var(--dd-fold-stroke) solid var(--dd-quiet);
+    --dd-fold-shift: calc((var(--dd-fold-stroke) - var(--dd-fold-size)) * .35355);
+    transform: translateY(var(--dd-fold-shift)) rotate(45deg);
+}
+
+.desert-down .dd-fold[aria-expanded="false"]::before {
+    transform: translateX(var(--dd-fold-shift)) rotate(-45deg);
+}
+
+/* for headings and list items, show folding icon on hover/keyboard focus when unfolded, and always when folded */
+.desert-down .dd-fold:is(.dd-fold-heading, .dd-fold-list-item) {
+    opacity: 0;
+    transition: opacity .15s;
+}
+
+.desert-down :is(h1, h2, h3, h4, h5, h6):hover>.dd-fold-heading,
+.desert-down li:hover:not(:has(li:hover))>.dd-fold-list-item,
+.desert-down .dd-fold:focus-visible,
+.desert-down .dd-fold[aria-expanded="false"] {
+    opacity: 1;
+}
+
+/* always show on devices that don't do hovering */
+@media (hover: none) {
+    .desert-down .dd-fold:is(.dd-fold-heading, .dd-fold-list-item) {
+        opacity: 1
+    }
+}
+
+.desert-down .dd-fold-heading {
+    height: 1.25em;
+    height: 1lh;
+    margin-left: -1.1rem;
+    margin-right: .1rem;
+}
+
+/* small screens have less padding */
+@media (max-width: 40rem) {
+    .desert-down .dd-fold-heading {
+        margin-left: -1rem;
+        margin-right: 0
+    }
+}
+
+.desert-down li>.dd-fold-list-item {
+    --dd-fold-gap: .6em;
+    position: absolute;
+    right: calc(100% - var(--dd-fold-marker-left));
+    width: auto;
+    height: 1.65em;
+    height: 1lh;
+    padding-left: .25em;
+    justify-content: flex-start;
+}
+
+.desert-down li>.dd-fold-list-item::before {
+    margin-right: calc(var(--dd-fold-gap) - var(--dd-fold-size) / 2);
+}
+
+/* bullets are .35em wide, centred on the marker axis */
+.desert-down ul>li>.dd-fold-list-item {
+    --dd-fold-marker-left: calc(var(--dd-marker-axis-x) - .175em);
+}
+
+/* checkboxes are .8em wide, centred on the marker axis */
+.desert-down ul>li.check-list-item>.dd-fold-list-item {
+    --dd-fold-marker-left: calc(var(--dd-marker-axis-x) - .4em);
+}
+
+.desert-down ol>li>.dd-fold-list-item {
+    --dd-fold-marker-left: var(--dd-number-width);
+}
+
+.desert-down li>ol>li>.dd-fold-list-item {
+    --dd-fold-gap: .7em;
+}
+
+.desert-down ol>li>ol>li>.dd-fold-list-item {
+    --dd-fold-gap: .5rem;
+}
+
+.desert-down li>ol>li>.dd-fold-list-item {
+    --dd-fold-occlusion: calc(var(--dd-fold-size) * 1.4142 + 4px);
+    z-index: 1;
+    background: linear-gradient(var(--dd-fold-surface), var(--dd-fold-surface)) no-repeat;
+    background-size: var(--dd-fold-occlusion) var(--dd-fold-occlusion);
+    background-position: calc(.25em + var(--dd-fold-size) / 2 - var(--dd-fold-occlusion) / 2) center;
+}
+
+.desert-down {
+    --dd-fold-surface: var(--dd-bg)
+}
+
+.desert-down .callout {
+    --dd-fold-surface: color-mix(in srgb, var(--dd-callout) var(--dd-colour-bg-opacity), var(--dd-bg))
+}
+
+.desert-down ol>li>.dd-fold-list-item::after {
+    content: attr(data-marker);
+    visibility: hidden;
+}
+
+/* callout fold icons at end of title line */
+.desert-down .dd-fold-callout {
+    float: right;
+    height: 1.5em;
+    /* fallback based on 1.5 line height */
+    height: 1lh;
+    margin-left: .5rem;
+}
+
+/* folded content */
+.desert-down .dd-fold-hidden,
+.desert-down .dd-fold-keep-trail .dd-fold-lead,
+.desert-down .dd-fold-after-list,
+.desert-down li.dd-folded>.dd-fold-list-item+* .dd-fold-rest,
+.desert-down li.dd-folded>.dd-fold-list-item+*~*,
+.desert-down .callout.dd-folded>.callout-title~* {
+    display: none !important;
+}
+
+/* folded callout shows only its title, so needs no spacing below it */
+.desert-down .callout.dd-folded>.callout-title {
+    padding-bottom: 0
+}
+
+/* folding icons aren't printed when block is unfolded */
+@media print {
+    .desert-down .dd-fold[aria-expanded="true"] {
+        visibility: hidden
+    }
+}

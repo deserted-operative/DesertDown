@@ -34,18 +34,20 @@ cargo run --release -- <input-file> > <output-file>
 Usage to write HTML to *standard output*:
 
 ```
-cargo run --release -- <input-file> --html [--theme light|dark|reactive] [--width fixed|full] [--allow-links] [--fragment]
+cargo run --release -- <input-file> --html [--theme=light|dark|reactive] [--width=fixed|full] [--allow-links] [--foldable[=headings,list-items,callouts]] [--fragment]
 ```
 
 Where:
 
-- The `--theme light|dark|reactive` (alternatively, `--light`, `--dark`, `--reactive`) flag determines whether the HTML output uses a light, dark, or reactive theme.
+- The `--theme=light|dark|reactive` (alternatively, `--light`, `--dark`, `--reactive`) flag determines whether the HTML output uses a light, dark, or reactive theme.
   - The reactive theme responds to browser or system preferences as to whether light or dark theming should be used.
   - If the flag is not specified, light theming is the default.
-- The `--width fixed|full` (alternatively, `--fixed-width`, `--full-width`) flag determines whether the HTML output consumes up to a fixed available width, or the full width available to it when being rendered.
+- The `--width=fixed|full` (alternatively, `--fixed-width`, `--full-width`) flag determines whether the HTML output consumes up to a fixed available width, or the full width available to it when being rendered.
   - If the flag is not specified, fixed width output is the default.
 - The `--allow-links` flag enables link behaviour to be live in the output HTML. In the interest of **security**, this behaviour is **disabled by default**, as links and embeds in the output HTML form the key attack surface of the program.
   - Note that when links are enabled, *there are security measures* in place to sanitise them, but the default experience is set to be the most cautious - hence the optional flag.
+- The `--foldable` flag enables folding in the output HTML - headings, list items with continuations/nested content, and callouts with both a title and content can be folded. Each of these defaults to being unfolded.
+  - Note that to fold only some rather than all of these, a selection can be listed with the flag: `--foldable=headings,list-items,callouts`, where any of these can be omitted.
 - The `--fragment` flag omits the HTML header that sets the styling and Content Security Policy (CSP). In the interest of yielding the best visual results, and benefitting from the defence-in-depth implementation approach, it is **recommended to not use this flag**.
   - If the flag is not specified, full HTML document output is the default.
 
@@ -53,7 +55,7 @@ Where:
 Of course, one can redirect this to a file:
 
 ```
-cargo run --release -- <input-file> --html [--theme light|dark|reactive] [--width fixed|full] [--allow-links] [--fragment] > <output-file>
+cargo run --release -- <input-file> --html [--theme=light|dark|reactive] [--width=fixed|full] [--allow-links] [--foldable[=headings,list-items,callouts]] [--fragment] > <output-file>
 ```
 
 ### Benchmarking

@@ -1,5 +1,5 @@
 use afl::fuzz;
-use desert_down::parser::{self, LinkPermissions, OutputWidth, Theme};
+use desert_down::parser::{self, Folding, LinkPermissions, OutputWidth, Theme};
 
 fn main() {
     fuzz!(|data: &[u8]| {
@@ -25,6 +25,7 @@ fn main() {
             Theme::Dark,
             OutputWidth::Fixed,
             LinkPermissions::Blocked,
+            Folding::DISABLED,
             "fuzz",
         );
 
@@ -36,6 +37,35 @@ fn main() {
             Theme::Dark,
             OutputWidth::Fixed,
             LinkPermissions::Allowed,
+            Folding::DISABLED,
+            "fuzz",
+        );
+
+        // document, links allowed, folding enabled
+        let mut document_foldable = Vec::new();
+        ast.ast_to_html_document_to_array(
+            input,
+            &mut document_foldable,
+            Theme::Reactive,
+            OutputWidth::Full,
+            LinkPermissions::Allowed,
+            Folding::ALL,
+            "fuzz",
+        );
+
+        // document, links blocked, only some folding enabled
+        let mut document_partly_foldable = Vec::new();
+        ast.ast_to_html_document_to_array(
+            input,
+            &mut document_partly_foldable,
+            Theme::Light,
+            OutputWidth::Fixed,
+            LinkPermissions::Blocked,
+            Folding {
+                headings: true,
+                list_items: false,
+                callouts: true,
+            },
             "fuzz",
         );
     })
