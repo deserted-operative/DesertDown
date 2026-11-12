@@ -1,7 +1,7 @@
-use desert_down::parser::{self, Folding, LinkPermissions, OutputWidth, Theme};
+use desert_down::parser::{self, Folding, LinkPermissions, MathRendering, OutputWidth, Theme};
 use std::{env, fs, path::Path, process};
 
-const USAGE_INFO: &str = "Usage: cargo run -- <input-file> [--html] [--theme=light|dark|reactive] [--width=fixed|full] [--allow-links] [--foldable[=headings,list-items,callouts]] [--fragment]";
+const USAGE_INFO: &str = "Usage: cargo run -- <input-file> [--html] [--theme=light|dark|reactive] [--width=fixed|full] [--allow-links] [--foldable[=headings,list-items,callouts]] [--math] [--fragment]";
 
 fn main() {
     // for CL args
@@ -21,6 +21,9 @@ fn main() {
     // no folding by default
     let mut folding = Folding::DISABLED;
 
+    // math is written out as LaTeX source code by default
+    let mut math = MathRendering::Disabled;
+
     // read CL args
     let arguments = env::args().skip(1);
 
@@ -31,12 +34,16 @@ fn main() {
             _ => (argument.as_str(), None),
         };
 
+        // WARNING: scripts/update_hashes.sh writes out documents with --html, --theme=, --width=, --foldable, --math, and --allow-links
+        // renaming these will require changes to the script
         match (option, value) {
             ("--html", None) => should_output_html = true,
 
             ("--fragment", None) => should_output_fragment = true,
 
             ("--allow-links", None) => links_allowed = LinkPermissions::Allowed,
+
+            ("--math", None) => math = MathRendering::Enabled,
 
             // --foldable applies to headings, callouts, and list items
             // --foldable=headings,callouts,list-items applies to only those listed
@@ -152,5 +159,5 @@ fn main() {
         .and_then(|stem| stem.to_str())
         .unwrap_or("");
 
-    ast.ast_to_html_document_to_stdout(&input, theme, width, links_allowed, folding, title);
+    ast.ast_to_html_document_to_stdout(&input, theme, width, links_allowed, folding, math, title);
 }

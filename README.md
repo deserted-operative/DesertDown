@@ -34,7 +34,7 @@ cargo run --release -- <input-file> > <output-file>
 Usage to write HTML to *standard output*:
 
 ```
-cargo run --release -- <input-file> --html [--theme=light|dark|reactive] [--width=fixed|full] [--allow-links] [--foldable[=headings,list-items,callouts]] [--fragment]
+cargo run --release -- <input-file> --html [--theme=light|dark|reactive] [--width=fixed|full] [--allow-links] [--foldable[=headings,list-items,callouts]] [--math] [--fragment]
 ```
 
 Where:
@@ -48,6 +48,8 @@ Where:
   - Note that when links are enabled, *there are security measures* in place to sanitise them, but the default experience is set to be the most cautious - hence the optional flag.
 - The `--foldable` flag enables folding in the output HTML - headings, list items with continuations/nested content, and callouts with both a title and content can be folded. Each of these defaults to being unfolded.
   - Note that to fold only some rather than all of these, a selection can be listed with the flag: `--foldable=headings,list-items,callouts`, where any of these can be omitted.
+- The `--math` flag uses [Temml](https://github.com/ronkok/Temml) to render both block and inline math in the HTML output, via MathML.
+  - When not supplied, the LaTeX source is shown.
 - The `--fragment` flag omits the HTML header that sets the styling and Content Security Policy (CSP). In the interest of yielding the best visual results, and benefitting from the defence-in-depth implementation approach, it is **recommended to not use this flag**.
   - If the flag is not specified, full HTML document output is the default.
 
@@ -55,7 +57,7 @@ Where:
 Of course, one can redirect this to a file:
 
 ```
-cargo run --release -- <input-file> --html [--theme=light|dark|reactive] [--width=fixed|full] [--allow-links] [--foldable[=headings,list-items,callouts]] [--fragment] > <output-file>
+cargo run --release -- <input-file> --html [--theme=light|dark|reactive] [--width=fixed|full] [--allow-links] [--foldable[=headings,list-items,callouts]] [--math] [--fragment] > <output-file>
 ```
 
 ### Benchmarking
@@ -104,6 +106,12 @@ cd fuzz && cargo afl config --build --force && cargo afl build && cargo afl fuzz
 > [!CAUTION]
 > Be aware of usage on systems with SSDs that you don't want to experience undue read/write wear.
 
+## Development
+
+With respect to AST-to-HTML feature, changes to folding or math logic, or output styling, are likely to require a regeneration of hashes for the CSP.
+
+This can be done by running `scripts/update_hashes.sh` (from any directory in the repo).
+
 ## Attribution
 
 Full details of licensing and attribution are provided in `./LICENSE`, but the salient points are:
@@ -114,6 +122,7 @@ Full details of licensing and attribution are provided in `./LICENSE`, but the s
   - The DesertDown icon is a derivative of the Markdown Mark, created by Dustin Curtis and Mac Tyler, which is released under the Creative Commons CC0 1.0
   - The DesertDown icon also uses the Inter font (https://github.com/rsms/inter), designed by Rasmus Andersson, released under the SIL Open Font License, Version 1.1
 - Markdown was originally created by John Gruber (https://daringfireball.net/projects/markdown/) and Aaron Swartz
+- Temml (https://github.com/ronkok/Temml) is created by Ron Kok, and is released under the MIT license. This, with the relevant font licenses, is included in `./src/parser/ast_to_html/temml/licenses`.
 
 ---
 ---

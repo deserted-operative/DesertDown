@@ -1,4 +1,6 @@
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+// WARNING: scripts/update_hashes.sh relies on these variant names (Light, Dark, Reactive)
+// changing these will require changes to the script
 pub enum Theme {
     #[default]
     Light,
@@ -70,6 +72,8 @@ impl Theme {
     #[inline]
     /// Returns base64 encoded SHA-256 of the styling, accounting for theme and output width parameters
     pub const fn stylesheet_hash(self, output_width: OutputWidth) -> &'static str {
+        // WARNING: scripts/update_hashes.sh relies on the patterns being structured as below
+        // changing these will require changes to the script
         match (self, output_width) {
             (Theme::Light, OutputWidth::Fixed) => "3xgmSU5jbev6e2T9QvBkWgEsnIC2xsHguQWdsVTMA9g=",
             (Theme::Light, OutputWidth::Full) => "HIJnHu6j50U0NLByjZoRqA5/6Fxo8WAOA6Wf4+E6JRU=",
@@ -83,6 +87,8 @@ impl Theme {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 /// Indicates whether HTML may consume a fixed width, or the full available width
+// WARNING: scripts/update_hashes.sh relies on these variant names
+// changing these will require changes to the script
 pub enum OutputWidth {
     #[default]
     Fixed,
