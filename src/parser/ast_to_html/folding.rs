@@ -76,10 +76,14 @@ impl Folding {
 pub const FOLDING_SCRIPT: &str = include_str!("folding.js");
 
 // Base64 encododing of SHA-256 of folding scripting, for CSP
+// WARNING: scripts/update_hashes.sh finds this constant by its name and declaration
+// renaming these will require changes to the script
 pub const FOLDING_SCRIPT_HASH: &str = "JiJADJzWzfQbbq+cCD1jzpBhIld3ruqPnsOdtgwbgvo=";
 
 // styling for folding support in HTML
 pub const FOLDING_STYLING: &str = include_str!("folding.css");
 
 // Base64 encododing of SHA-256 of folding-specific styling, for CSP
+// WARNING: scripts/update_hashes.sh finds this constant by its name and declaration
+// renaming these will require changes to the script
 pub const FOLDING_STYLING_HASH: &str = "9mATNWP91y5peXslc2XgJrNCdmFZoVLfieLE8V9VZqI=";

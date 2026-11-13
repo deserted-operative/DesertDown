@@ -34,6 +34,8 @@ mod html_document_utils;
 mod html_escape_utils;
 #[path = "ast_to_html/links.rs"]
 mod links;
+#[path = "ast_to_html/math.rs"]
+mod math;
 #[path = "ast_to_html/styling.rs"]
 mod styling;
 #[path = "ast_to_html/tables.rs"]
@@ -64,6 +66,10 @@ pub use inline_transitions::INLINE_TRANSITIONS;
 pub use folding::{FOLDING_SCRIPT, FOLDING_SCRIPT_HASH, FOLDING_STYLING, FOLDING_STYLING_HASH, Folding};
 pub use input_string_utils::{InputChar, InputCharsForParsing, InputStringRange, InputStringView};
 pub use links::LinkPermissions;
+pub use math::{
+    MATH_SCRIPT, MATH_SCRIPT_HASH, MATH_STYLING, MATH_STYLING_HASH, MathRendering, TEMML_SCRIPT,
+    TEMML_SCRIPT_HASH,
+};
 pub use parser_utils::Job;
 pub use styling::{OutputWidth, Theme};
 pub use transition_utils::WILDCARD_COLUMN_INDEX;
